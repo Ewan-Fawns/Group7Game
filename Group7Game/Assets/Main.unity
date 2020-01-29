@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 347434785}
   m_Layer: 0
   m_Name: Ground placeholder
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -182,8 +182,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 347434782}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.46, y: -3.91, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.31, y: -3.983, z: 0}
+  m_LocalScale: {x: 2.0487509, y: 1.2535839, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -296,8 +296,8 @@ GameObject:
   - component: {fileID: 869184813}
   - component: {fileID: 869184812}
   - component: {fileID: 869184811}
-  - component: {fileID: 869184814}
   - component: {fileID: 869184815}
+  - component: {fileID: 869184814}
   m_Layer: 0
   m_Name: Character placeholder
   m_TagString: Untagged
@@ -324,7 +324,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!212 &869184812
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -383,8 +383,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &869184814
-CapsuleCollider2D:
+--- !u!61 &869184814
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -396,8 +396,18 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
   m_Size: {x: 1, y: 1}
-  m_Direction: 0
+  m_EdgeRadius: 0
 --- !u!114 &869184815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -409,3 +419,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b656d83755094ce44a6d60314f4d45c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  speed: 10
+  jumpHeight: 10
