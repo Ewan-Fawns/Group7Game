@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour {
     public float speed = 100.0f; //the speed of the player
     public float jumpHeight = 1.0f; // determines how high the player can jump
     private bool isOnGround = false; // used to check if the player is on the ground
+    public bool isMovingStone = false; // used to check to see if the player is moving a rune stone
+    private GameObject interactable;
     // Use this for initialization
     void Start ()
     {
@@ -17,7 +19,7 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        
+        Interact();
     }
 
     private void FixedUpdate()
@@ -41,20 +43,56 @@ public class PlayerController : MonoBehaviour {
         //jump
         if (Input.GetKey(KeyCode.W))
         {
-            if(isOnGround == true)
+            if(isOnGround == true && isMovingStone == false)
             {
                 rb.velocity = new Vector3(rb.velocity.x, jumpHeight, 0);
                 isOnGround = false;
                 print("jumped");
             }
         }
+
+        
+    }
+
+    void Interact()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            //Creates a rigidbody and a distance joint on the runestone object for dragging
+            if (interactable.tag == "RuneStone")
+            {
+                interactable.GetComponent<RuneStone>().rb = interactable.AddComponent<Rigidbody2D>();
+                interactable.GetComponent<RuneStone>().rb.freezeRotation = true;
+                interactable.GetComponent<RuneStone>().distanceJoint = interactable.AddComponent<DistanceJoint2D>();
+                interactable.GetComponent<RuneStone>().distanceJoint.connectedBody = rb;
+            }
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //enables the player to jump again when touching the ground
         if(collision.gameObject.tag == "Ground")
         {
             isOnGround = true;
+        }
+        //enables the player to jump and makes the runestone the active interactable object
+        if (collision.gameObject.tag == "RuneStone")
+        {
+            isOnGround = true;
+            interactable = collision.gameObject;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        //interactable is removed thereby stopping functionality when not touching
+        if (collision.gameObject.tag == "RuneStone")
+        {
+            if(interactable.tag == "RuneStone")
+            {
+                interactable = null;
+            }
         }
     }
 }
