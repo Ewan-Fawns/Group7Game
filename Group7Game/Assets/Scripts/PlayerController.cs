@@ -61,10 +61,22 @@ public class PlayerController : MonoBehaviour {
             //Creates a rigidbody and a distance joint on the runestone object for dragging
             if (interactable.tag == "RuneStone")
             {
-                interactable.GetComponent<RuneStone>().rb = interactable.AddComponent<Rigidbody2D>();
-                interactable.GetComponent<RuneStone>().rb.freezeRotation = true;
-                interactable.GetComponent<RuneStone>().distanceJoint = interactable.AddComponent<DistanceJoint2D>();
-                interactable.GetComponent<RuneStone>().distanceJoint.connectedBody = rb;
+                //if the player isnt moving a stone, adds the components
+                if(isMovingStone == false)
+                {
+                    interactable.GetComponent<RuneStone>().rb = interactable.AddComponent<Rigidbody2D>();
+                    interactable.GetComponent<RuneStone>().rb.freezeRotation = true;
+                    interactable.GetComponent<RuneStone>().distanceJoint = interactable.AddComponent<DistanceJoint2D>();
+                    interactable.GetComponent<RuneStone>().distanceJoint.connectedBody = rb;
+                    isMovingStone = true;
+                }
+                //if the player is moving a stone, destroys the components
+                else
+                {
+                    Destroy(interactable.GetComponent<RuneStone>().distanceJoint);
+                    Destroy(interactable.GetComponent<RuneStone>().rb);
+                    isMovingStone = false;
+                }
             }
         }
     }
@@ -89,9 +101,10 @@ public class PlayerController : MonoBehaviour {
         //interactable is removed thereby stopping functionality when not touching
         if (collision.gameObject.tag == "RuneStone")
         {
-            if(interactable.tag == "RuneStone")
+            if(interactable.tag == "RuneStone" && isMovingStone == false)
             {
                 interactable = null;
+                print("no");
             }
         }
     }
