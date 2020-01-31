@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-    public Rigidbody2D rb;
+    public Rigidbody2D rb;//used to move the player
     public float speed = 100.0f; //the speed of the player
     public float jumpHeight = 1.0f; // determines how high the player can jump
     private bool isOnGround = false; // used to check if the player is on the ground
     public bool isMovingStone = false; // used to check to see if the player is moving a rune stone
-    private GameObject interactable;
+    private GameObject interactable = null;//used to check which game object is currently selected for interaction
     // Use this for initialization
     void Start ()
     {
@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour {
         MovePlayer();
     }
 
+    //used to move the player
     void MovePlayer()
     {
         
@@ -47,7 +48,6 @@ public class PlayerController : MonoBehaviour {
             {
                 rb.velocity = new Vector3(rb.velocity.x, jumpHeight, 0);
                 isOnGround = false;
-                print("jumped");
             }
         }
 
@@ -56,8 +56,15 @@ public class PlayerController : MonoBehaviour {
 
     void Interact()
     {
+        //used for all interactable objects
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            //used for bug fixing
+            if (interactable == null)
+            {
+                print("No interactable");
+            }
+
             //Creates a rigidbody and a distance joint on the runestone object for dragging
             if (interactable.tag == "RuneStone")
             {
@@ -66,6 +73,7 @@ public class PlayerController : MonoBehaviour {
                 {
                     interactable.GetComponent<RuneStone>().rb = interactable.AddComponent<Rigidbody2D>();
                     interactable.GetComponent<RuneStone>().rb.freezeRotation = true;
+                    interactable.GetComponent<RuneStone>().rb.mass = 1.0f;
                     interactable.GetComponent<RuneStone>().distanceJoint = interactable.AddComponent<DistanceJoint2D>();
                     interactable.GetComponent<RuneStone>().distanceJoint.connectedBody = rb;
                     isMovingStone = true;
@@ -104,7 +112,6 @@ public class PlayerController : MonoBehaviour {
             if(interactable.tag == "RuneStone" && isMovingStone == false)
             {
                 interactable = null;
-                print("no");
             }
         }
     }
