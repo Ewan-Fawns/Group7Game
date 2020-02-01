@@ -79,6 +79,7 @@ public class RuneStone : MonoBehaviour {
         if(collision.gameObject.tag == "Ground" && isTouchingStone == false)
         {
             Destroy(distanceJoint);
+            GameObject.Find("Character").GetComponent<PlayerController>().isMovingStone = false;
         }
         //makes it possible for the rune stone to break the joint after falling off edge, should the player touch the rune stone with another rune stone
         if (collision.gameObject.tag == "RuneStone")
