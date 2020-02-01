@@ -24,6 +24,19 @@ public class RuneStone : MonoBehaviour {
 
     private void FixedUpdate()
     {
+        //limits the movement of the rune stone
+        if(rb != null)
+        {
+            if (rb.velocity.x > 1)
+            {
+                rb.velocity = new Vector3(1f, rb.velocity.y, 0);
+            }
+            else if (rb.velocity.x < -1)
+            {
+                rb.velocity = new Vector3(-1f, rb.velocity.y, 0);
+            }
+        }
+        
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -31,9 +44,10 @@ public class RuneStone : MonoBehaviour {
         //destroys the rigidbody when colliding with the ground, but only if the player isnt touching the collider
         if(collision.gameObject.tag == "Ground")
         {
-            if(playerCollision == false)
+            if(playerCollision == false && GameObject.Find("Character").GetComponent<PlayerController>().isMovingStone == false)
             {
               Destroy(rb);
+                print("jup");
             }
         }
         //ensures the rune stone does not break the joint when colliding with another rune stone

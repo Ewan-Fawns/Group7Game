@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour {
             }
 
             //Creates a rigidbody and a distance joint on the runestone object for dragging
-            if (interactable.tag == "RuneStone")
+            else if (interactable.tag == "RuneStone")
             {
                 //if the player isnt moving a stone, adds the components
                 
@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour {
                 {
                     interactable.GetComponent<RuneStone>().rb = interactable.AddComponent<Rigidbody2D>();
                     interactable.GetComponent<RuneStone>().rb.freezeRotation = true;
-                    interactable.GetComponent<RuneStone>().rb.mass = 0.5f;
+                    interactable.GetComponent<RuneStone>().rb.mass = 0.3f;
                     interactable.GetComponent<RuneStone>().rb.gravityScale = 1.5f;
                     interactable.GetComponent<RuneStone>().distanceJoint = interactable.AddComponent<DistanceJoint2D>();
                     interactable.GetComponent<RuneStone>().distanceJoint.connectedBody = rb;
