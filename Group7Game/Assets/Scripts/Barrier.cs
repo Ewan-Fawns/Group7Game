@@ -4,17 +4,29 @@ using UnityEngine;
 
 public class Barrier : MonoBehaviour {
     public GameObject attachedRuneStone;
-	// Use this for initialization
-	void Start () {
-		
-	}
+    public List<GameObject> RuneStoneSlots;
+    public Vector3 origonalLocation;
+    // Use this for initialization
+    void Start () {
+        origonalLocation = transform.position;
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        //destroys the barrier once the rune stot has been filled
-		if(attachedRuneStone.GetComponent<RuneStoneSlot>().activate == true)
+        int complete = 0;
+
+        foreach (GameObject slot in RuneStoneSlots)
         {
-            Destroy(gameObject);
+
+            if(slot.GetComponent<RuneStoneSlot>().activate == true)
+            {
+                complete++;
+            }
+        }
+
+        if(complete == RuneStoneSlots.Count)
+        {
+            gameObject.SetActive(false);
         }
 	}
 }

@@ -6,10 +6,10 @@ public class RuneStone : MonoBehaviour {
     private Vector3 origonalLocation; //Used to store the origonal location of the rune stone for teleportation
     private bool playerCollision = false; //used to prevent the rigidbody from being destroyed if the player is dragging it
     private bool isTouchingStone = false; //used to prevent bugs where collisions break the joint
-    public bool isInteractable = true;//Used to check if the runestone is in the rune stone slot
     public Rigidbody2D rb;//Rigidbody is dynamically created under certain conditions
     public DistanceJoint2D distanceJoint; //Distance joint to be added to the player when dragging
     public int identifier = 0; //identifier used to check if the rune stone is associated with the rune stone slot
+    public int checkPoint = 0; //used to identify which checkpoint is associated with this runestone
 
 	// Use this for initialization
 	void Start () {
@@ -69,7 +69,6 @@ public class RuneStone : MonoBehaviour {
             GameObject.Find("Character").GetComponent<PlayerController>().isMovingStone = false;
             if (collision.gameObject.GetComponent<RuneStoneSlot>().identifier == identifier)
             {
-                isInteractable = false;
                 transform.position = collision.gameObject.transform.position + new Vector3(0,0.4f,0);
                 collision.gameObject.GetComponent<RuneStoneSlot>().activate = true;
             }
@@ -100,7 +99,10 @@ public class RuneStone : MonoBehaviour {
         {
             isTouchingStone = false;
         }
+    }
 
-        
+    public Vector3 getOrigonalPosition()
+    {
+        return origonalLocation;
     }
 }

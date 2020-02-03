@@ -7,9 +7,12 @@ public class PlayerController : MonoBehaviour {
     public Rigidbody2D rb;//used to move the player
     public float speed = 1.0f; //the speed of the player
     public float jumpHeight = 5f; // determines how high the player can jump
-    private bool isOnGround = false; // used to check if the player is on the ground
     public bool isMovingStone = false; // used to check to see if the player is moving a rune stone
+    public int checkPoint = 0; // used to check which checkpoint the player is at
+
+    private bool isOnGround = false; // used to check if the player is on the ground
     private GameObject interactable = null;//used to check which game object is currently selected for interaction
+    
     // Use this for initialization
     void Start ()
     {
@@ -100,6 +103,14 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "CheckPoint")
+        {
+            checkPoint = collision.GetComponent<CheckPoint>().checkPointNum;
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //enables the player to jump again when touching the ground
@@ -137,4 +148,6 @@ public class PlayerController : MonoBehaviour {
             }
         }
     }
+
+    
 }
