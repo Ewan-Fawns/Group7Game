@@ -9,6 +9,9 @@ TagManager:
   - RuneStoneSlot
   - CheckPoint
   - Ladder
+  - Button
+  - RollingStone
+  - RotatingPlatform
   layers:
   - Default
   - TransparentFX

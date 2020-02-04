@@ -117,6 +117,7 @@ public class PlayerController : MonoBehaviour {
                     isMovingStone = false;
                 }
             }
+            //performs ladder functionality
             else if(interactable.tag == "Ladder")
             {
                 if(isOnLadder == false)
@@ -132,6 +133,18 @@ public class PlayerController : MonoBehaviour {
                     rb.gravityScale = 1.5f;
                 }
             }
+            //performs button functionality
+            else if (interactable.tag == "Button")
+            {
+                if(interactable.GetComponent<Button>().isRotating == false)
+                {
+                    interactable.GetComponent<Button>().RotatePlatforms();
+                }
+                else
+                {
+                    interactable.GetComponent<Button>().StopRotatePlatforms();
+                }
+            }
         }
     }
 
@@ -143,6 +156,11 @@ public class PlayerController : MonoBehaviour {
         }
 
         if (collision.gameObject.tag == "Ladder" && isMovingStone == false)
+        {
+            interactable = collision.gameObject;
+        }
+
+        if (collision.gameObject.tag == "Button" && isMovingStone == false)
         {
             interactable = collision.gameObject;
         }
@@ -164,6 +182,11 @@ public class PlayerController : MonoBehaviour {
                 rb.gravityScale = 1.5f;
                 isOnLadder = false;
             }
+        }
+
+        if (collision.gameObject.tag == "Button" && isMovingStone == false)
+        {
+            interactable = null;
         }
     }
 
