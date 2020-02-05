@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Barrier : MonoBehaviour {
-    public GameObject attachedRuneStone;
     public List<GameObject> RuneStoneSlots;
-    public Vector3 origonalLocation;
     // Use this for initialization
     void Start () {
-        origonalLocation = transform.position;
     }
 	
 	// Update is called once per frame
