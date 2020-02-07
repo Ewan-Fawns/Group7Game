@@ -117,6 +117,7 @@ public class PlayerController : MonoBehaviour {
                     isMovingStone = false;
                 }
             }
+            //Interaction to climb the ladder
             else if(interactable.tag == "Ladder")
             {
                 if(isOnLadder == false)
@@ -132,6 +133,11 @@ public class PlayerController : MonoBehaviour {
                     rb.gravityScale = 1.5f;
                 }
             }
+            //Interaction to fire the catapult
+            else if(interactable.tag == "Catapult")
+            {
+                interactable.GetComponent<Catapult>().LaunchCatapult();
+            }
         }
     }
 
@@ -146,10 +152,16 @@ public class PlayerController : MonoBehaviour {
         {
             interactable = collision.gameObject;
         }
+
+        if (collision.gameObject.tag == "Catapult" && isMovingStone == false)
+        {
+            interactable = collision.gameObject;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        //Pushes the player up if they are at the top of the ladder and drops the player if they are at the bottom
         if (collision.gameObject.tag == "Ladder" && isMovingStone == false)
         {
             interactable = null;
@@ -164,6 +176,11 @@ public class PlayerController : MonoBehaviour {
                 rb.gravityScale = 1.5f;
                 isOnLadder = false;
             }
+        }
+        //makes the interactable null if the player leaves the catapult triggerbox
+        if (collision.gameObject.tag == "Catapult" && isMovingStone == false)
+        {
+            interactable = null;
         }
     }
 
