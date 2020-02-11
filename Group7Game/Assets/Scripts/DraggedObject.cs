@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DraggedObject : MonoBehaviour {
-    private bool playerCollision = false; //used to prevent the rigidbody from being destroyed if the player is dragging it
-    private bool isTouchingStone = false; //used to prevent bugs where collisions break the joint
-    private bool isTouchingOtherObject = false; //used to prevent bugs where collisions break the joint
-    public Rigidbody2D rb;//Rigidbody is dynamically created under certain conditions
+    protected bool playerCollision = false; //used to prevent the rigidbody from being destroyed if the player is dragging it
+    protected bool isTouchingStone = false; //used to prevent bugs where collisions break the joint
+    protected bool isTouchingOtherObject = false; //used to prevent bugs where collisions break the joint
+    public Rigidbody2D rb;//Rigidbody is dynamically created and destroyed under certain conditions
     public DistanceJoint2D distanceJoint; //Distance joint to be added to the player when dragging
+    public bool limitControl = true;
 
 
     // Use this for initialization
     void Start()
     {
-        rb = gameObject.AddComponent<Rigidbody2D>();
+        
     }
 
     // Update is called once per frame
@@ -24,18 +25,20 @@ public class DraggedObject : MonoBehaviour {
     private void FixedUpdate()
     {
         //limits the movement of the rune stone
-        if (rb != null)
+        if(limitControl == true)
         {
-            if (rb.velocity.x > 1)
+            if (rb != null)
             {
-                rb.velocity = new Vector3(1f, rb.velocity.y, 0);
-            }
-            else if (rb.velocity.x < -1)
-            {
-                rb.velocity = new Vector3(-1f, rb.velocity.y, 0);
+                if (rb.velocity.x > 1)
+                {
+                    rb.velocity = new Vector3(1f, rb.velocity.y, 0);
+                }
+                else if (rb.velocity.x < -1)
+                {
+                    rb.velocity = new Vector3(-1f, rb.velocity.y, 0);
+                }
             }
         }
-
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -75,5 +78,15 @@ public class DraggedObject : MonoBehaviour {
         {
             isTouchingOtherObject = false;
         }
+    }
+    //Creates all the components necessairy for the dragging mechanic.
+    public void createDraggingComponents()
+    {
+        rb = gameObject.AddComponent<Rigidbody2D>();
+        rb.freezeRotation = true;
+        rb.mass = 0.3f;
+        rb.gravityScale = 1.5f;
+        distanceJoint = gameObject.AddComponent<DistanceJoint2D>();
+        distanceJoint.connectedBody = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().rb;
     }
 }

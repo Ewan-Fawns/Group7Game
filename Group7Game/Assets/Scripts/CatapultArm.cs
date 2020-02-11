@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class CatapultArm : MonoBehaviour {
     JointMotor2D MotorRef;
-    private bool hasLaunched = false;
-    private float resetTime = 0;
+    public GameObject launchable;
 	// Use this for initialization
 	void Start () {
         MotorRef = GetComponent<HingeJoint2D>().motor;
@@ -13,31 +12,32 @@ public class CatapultArm : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(hasLaunched == true)
-        {
-            resetTime += Time.deltaTime;
-            if(resetTime >= 1.5)
-            {
-                ResetArm();
-                resetTime = 0;
-                
-            }
-        }
+
 	}
 
     public void RotateArm()
     {
         MotorRef.motorSpeed = 400;
         GetComponent<HingeJoint2D>().motor = MotorRef;
-        hasLaunched = true;
     }
 
-    private void ResetArm()
+    public void ResetArm()
     {
         MotorRef.motorSpeed = -50;
         GetComponent<HingeJoint2D>().motor = MotorRef;
-        hasLaunched = false;
     }
 
+    public void StoreLaunchable(GameObject launchableRef)
+    {
+        launchable = launchableRef;
+    }
 
+    public void ReleaseLaunchable(Vector3 target)
+    {
+        Destroy(launchable.GetComponent<Launchable>().launchableHinge);
+        launchable.GetComponent<Launchable>().isFiring = true;
+        launchable.GetComponent<CircleCollider2D>().enabled = true;
+        launchable.GetComponent<Launchable>().launch(target);
+        launchable = null;
+    }
 }

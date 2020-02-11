@@ -9,7 +9,6 @@ public class PlayerController : MonoBehaviour {
     public float jumpHeight = 5f; // determines how high the player can jump
     public bool isMovingStone = false; // used to check to see if the player is moving a rune stone
     public int checkPoint = 0; // used to check which checkpoint the player is at
-
     private bool isOnLadder = false;
     private bool isOnGround = false; // used to check if the player is on the ground
     private GameObject interactable = null;//used to check which game object is currently selected for interaction
@@ -101,20 +100,32 @@ public class PlayerController : MonoBehaviour {
                 
                 if(isMovingStone == false)
                 {
-                    interactable.GetComponent<RuneStone>().rb = interactable.AddComponent<Rigidbody2D>();
-                    interactable.GetComponent<RuneStone>().rb.freezeRotation = true;
-                    interactable.GetComponent<RuneStone>().rb.mass = 0.3f;
-                    interactable.GetComponent<RuneStone>().rb.gravityScale = 1.5f;
-                    interactable.GetComponent<RuneStone>().distanceJoint = interactable.AddComponent<DistanceJoint2D>();
-                    interactable.GetComponent<RuneStone>().distanceJoint.connectedBody = rb;
+                    interactable.GetComponent<DraggedObject>().createDraggingComponents();
                     isMovingStone = true;
                 }
                 //if the player is moving a stone, destroys the components
                 else
                 {
-                    Destroy(interactable.GetComponent<RuneStone>().distanceJoint);
-                    Destroy(interactable.GetComponent<RuneStone>().rb);
+                    Destroy(interactable.GetComponent<DraggedObject>().distanceJoint);
+                    Destroy(interactable.GetComponent<DraggedObject>().rb);
                     isMovingStone = false;
+                }
+            }
+            //Creates a rigidbody and a distance joint on the launchable object for dragging
+            else if (interactable.tag == "Launchable")
+            {
+                if (isMovingStone == false)
+                {
+                    interactable.GetComponent<DraggedObject>().createDraggingComponents();
+                    isMovingStone = true;
+                }
+                //if the player is moving a stone, destroys the components
+                else
+                {
+                    Destroy(interactable.GetComponent<DraggedObject>().distanceJoint);
+                    Destroy(interactable.GetComponent<DraggedObject>().rb);
+                    isMovingStone = false;
+                    print("ypu");
                 }
             }
             //Interaction to climb the ladder
@@ -197,6 +208,12 @@ public class PlayerController : MonoBehaviour {
             isOnGround = true;
             interactable = collision.gameObject;
         }
+        //enables the player to jump and makes the launchable the active interactable object
+        if (collision.gameObject.tag == "Launchable")
+        {
+            isOnGround = true;
+            interactable = collision.gameObject;
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -205,6 +222,14 @@ public class PlayerController : MonoBehaviour {
         if (collision.gameObject.tag == "RuneStone")
         {
             if(interactable.tag == "RuneStone" && isMovingStone == false)
+            {
+                interactable = null;
+            }
+        }
+
+        if (collision.gameObject.tag == "Launchable")
+        {
+            if(interactable.tag == "Launchable" && isMovingStone == false)
             {
                 interactable = null;
             }
@@ -220,6 +245,7 @@ public class PlayerController : MonoBehaviour {
                 isMovingStone = false;
             }
         }
+
     }
 
     void createRigidbody()

@@ -11,29 +11,12 @@ public class RuneStone : DraggedObject {
 	void Start () {
         origonalLocation = transform.position;
         rb = gameObject.AddComponent<Rigidbody2D>();
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
-
-    private void FixedUpdate()
-    {
-        //limits the movement of the rune stone
-        if(rb != null)
-        {
-            if (rb.velocity.x > 1)
-            {
-                rb.velocity = new Vector3(1f, rb.velocity.y, 0);
-            }
-            else if (rb.velocity.x < -1)
-            {
-                rb.velocity = new Vector3(-1f, rb.velocity.y, 0);
-            }
-        }
-        
-    }
 
 
     private void OnTriggerEnter2D(Collider2D collision)

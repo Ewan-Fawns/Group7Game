@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Barrier : MonoBehaviour {
     public List<GameObject> RuneStoneSlots;
+    public bool isBreakable = false;
     // Use this for initialization
     void Start () {
     }
@@ -26,4 +27,15 @@ public class Barrier : MonoBehaviour {
             gameObject.SetActive(false);
         }
 	}
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Launchable" && isBreakable == true)
+        {
+            if(collision.gameObject.GetComponent<Launchable>().isFiring == true)
+            {
+                gameObject.SetActive(false);
+            }
+        }
+    }
 }

@@ -3,19 +3,47 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Catapult : MonoBehaviour {
-    public GameObject attachedArm;
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    public GameObject attachedArm;//the catapult arm
+    public GameObject target;//where the catapult will shoot
+    private float resetTime = 0;//used to reset the catapult
+    private bool hasLaunched = false;//used to check if the catapult has launched
+    private bool stupidShit = false;
+    // Use this for initialization
+    void Start () {
 		
 	}
 
+    // Update is called once per frame
+    void Update()
+    {
+        if (hasLaunched == true)
+        {
+            //releases the launchable object
+            if(attachedArm.transform.rotation.eulerAngles.z >= 270 && attachedArm.GetComponent<CatapultArm>().launchable != null)
+            {
+                stupidShit = true;
+            }
+            if (attachedArm.transform.rotation.eulerAngles.z <= 270 && attachedArm.GetComponent<CatapultArm>().launchable != null && stupidShit == true)
+            {
+                attachedArm.GetComponent<CatapultArm>().ReleaseLaunchable(target.transform.position);
+                print("yo ya boi");
+                stupidShit = false;
+            }
+            //resets arm after a period of time
+            resetTime += Time.deltaTime;
+            if (resetTime >= 1.5)
+            {
+                attachedArm.GetComponent<CatapultArm>().ResetArm();
+                hasLaunched = false;
+                resetTime = 0;
+            }
+        }
+    }
+
+    //launches the catapult
     public void LaunchCatapult()
     {
         attachedArm.GetComponent<CatapultArm>().RotateArm();
+        hasLaunched = true;
     }
 }
