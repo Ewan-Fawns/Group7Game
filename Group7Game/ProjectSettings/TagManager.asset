@@ -11,6 +11,9 @@ TagManager:
   - Ladder
   - Platform
   - Rotation_Detector
+  - Catapult
+  - CatapultArm
+  - Launchable
   layers:
   - Default
   - TransparentFX
