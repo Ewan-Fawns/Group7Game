@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour {
     public int checkPoint = 0; // used to check which checkpoint the player is at
     private bool isOnLadder = false;
     private bool isOnGround = false; // used to check if the player is on the ground
-    private GameObject interactable = null;//used to check which game object is currently selected for interaction
+    public GameObject interactable = null;//used to check which game object is currently selected for interaction
     
     // Use this for initialization
     void Start ()
@@ -125,7 +125,6 @@ public class PlayerController : MonoBehaviour {
                     Destroy(interactable.GetComponent<DraggedObject>().distanceJoint);
                     Destroy(interactable.GetComponent<DraggedObject>().rb);
                     isMovingStone = false;
-                    print("ypu");
                 }
             }
             //Interaction to climb the ladder

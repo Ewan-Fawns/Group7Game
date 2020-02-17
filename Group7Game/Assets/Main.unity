@@ -451,7 +451,7 @@ Prefab:
     - target: {fileID: 114565052890673736, guid: 0874fb074f1b3f8448aca5bf08f4d5ed,
         type: 2}
       propertyPath: RuneStoneSlots.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4278885288412424, guid: 0874fb074f1b3f8448aca5bf08f4d5ed, type: 2}
       propertyPath: m_LocalPosition.x
@@ -710,7 +710,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 35.78, y: 0.26999974, z: -10}
+  m_LocalPosition: {x: -1.05, y: 0.5899997, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1005,7 +1005,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1002340529}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 35.78, y: 0.26999974, z: -10}
+  m_LocalPosition: {x: -1.05, y: 0.5899997, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 58690196}
@@ -1178,11 +1178,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4107117963963238, guid: f204ac4fb8f63a447b90a94fea1d428c, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 35.78
+      value: -1.05
       objectReference: {fileID: 0}
     - target: {fileID: 4107117963963238, guid: f204ac4fb8f63a447b90a94fea1d428c, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -2.78
+      value: -2.46
       objectReference: {fileID: 0}
     - target: {fileID: 4107117963963238, guid: f204ac4fb8f63a447b90a94fea1d428c, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1753,7 +1753,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 07d4619111f83ed42a3619877e1d90c6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

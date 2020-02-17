@@ -5,7 +5,6 @@ using UnityEngine;
 public class Launchable : DraggedObject {
     public HingeJoint2D launchableHinge;
     public bool isFiring = false;
-    private float strength = 10;
     // Use this for initialization
     void Start () {
         rb = gameObject.AddComponent<Rigidbody2D>();
@@ -23,13 +22,13 @@ public class Launchable : DraggedObject {
             {
                 Destroy(distanceJoint);
                 GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().isMovingStone = false;
+                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().interactable = null;
             }
             transform.position = collision.transform.position - new Vector3(1, -0.5f, 0);
             AttachLaunchable(collision);
             gameObject.GetComponent<CircleCollider2D>().enabled = false;
             collision.GetComponent<CatapultArm>().StoreLaunchable(gameObject);
             GetComponent<SpriteRenderer>().sortingOrder = -3;
-            print("uhuh");
         }
     }
 
@@ -57,7 +56,6 @@ public class Launchable : DraggedObject {
     {
         launchableHinge = gameObject.AddComponent<HingeJoint2D>();
         launchableHinge.connectedBody = arm.GetComponent<Rigidbody2D>();
-        print("yo");
     }
 
     public void launch(Vector3 target)
@@ -66,8 +64,6 @@ public class Launchable : DraggedObject {
         limitControl = false;
         Vector3 launchVector;
         launchVector = target - transform.position;
-        print(launchVector);
         rb.velocity = launchVector;
-        print(launchVector.normalized * strength);
     }
 }

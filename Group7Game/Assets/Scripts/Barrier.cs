@@ -11,20 +11,23 @@ public class Barrier : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        int complete = 0;
-
-        foreach (GameObject slot in RuneStoneSlots)
+        if(RuneStoneSlots.Count != 0)
         {
+            int complete = 0;
 
-            if(slot.GetComponent<RuneStoneSlot>().activate == true)
+            foreach (GameObject slot in RuneStoneSlots)
             {
-                complete++;
-            }
-        }
 
-        if(complete == RuneStoneSlots.Count)
-        {
-            gameObject.SetActive(false);
+                if (slot.GetComponent<RuneStoneSlot>().activate == true)
+                {
+                    complete++;
+                }
+            }
+
+            if (complete == RuneStoneSlots.Count)
+            {
+                gameObject.SetActive(false);
+            }
         }
 	}
 

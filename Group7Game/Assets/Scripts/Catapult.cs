@@ -7,7 +7,7 @@ public class Catapult : MonoBehaviour {
     public GameObject target;//where the catapult will shoot
     private float resetTime = 0;//used to reset the catapult
     private bool hasLaunched = false;//used to check if the catapult has launched
-    private bool stupidShit = false;
+    private bool angleCheck = false;
     // Use this for initialization
     void Start () {
 		
@@ -21,13 +21,12 @@ public class Catapult : MonoBehaviour {
             //releases the launchable object
             if(attachedArm.transform.rotation.eulerAngles.z >= 270 && attachedArm.GetComponent<CatapultArm>().launchable != null)
             {
-                stupidShit = true;
+                angleCheck = true;
             }
-            if (attachedArm.transform.rotation.eulerAngles.z <= 270 && attachedArm.GetComponent<CatapultArm>().launchable != null && stupidShit == true)
+            if (attachedArm.transform.rotation.eulerAngles.z <= 270 && attachedArm.GetComponent<CatapultArm>().launchable != null && angleCheck == true)
             {
                 attachedArm.GetComponent<CatapultArm>().ReleaseLaunchable(target.transform.position);
-                print("yo ya boi");
-                stupidShit = false;
+                angleCheck = false;
             }
             //resets arm after a period of time
             resetTime += Time.deltaTime;
