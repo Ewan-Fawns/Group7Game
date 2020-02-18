@@ -32,7 +32,7 @@ public class RuneStone : DraggedObject {
             if (collision.gameObject.GetComponent<RuneStoneSlot>().identifier == identifier)
             {
                 transform.position = collision.gameObject.transform.position + new Vector3(0,0.4f,0);
-                collision.gameObject.GetComponent<RuneStoneSlot>().SetActivate(false);
+                collision.gameObject.GetComponent<RuneStoneSlot>().SetActivate(true);
             }
             else
             {
