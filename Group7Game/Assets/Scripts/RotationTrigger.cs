@@ -12,7 +12,7 @@ public class RotationTrigger : MonoBehaviour
     }
 
     // Update is called once per frame
-    void OnTriggerEnter(Collision other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player")
         {
@@ -22,7 +22,7 @@ public class RotationTrigger : MonoBehaviour
         }
     }
 
-    void OnTriggerExit(Collision other)
+    void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player")
         {
