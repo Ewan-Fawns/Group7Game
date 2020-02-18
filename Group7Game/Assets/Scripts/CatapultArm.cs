@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CatapultArm : MonoBehaviour {
     JointMotor2D MotorRef;
-    public GameObject launchable;
+    private GameObject launchable;
 	// Use this for initialization
 	void Start () {
         MotorRef = GetComponent<HingeJoint2D>().motor;
@@ -34,10 +34,20 @@ public class CatapultArm : MonoBehaviour {
 
     public void ReleaseLaunchable(Vector3 target)
     {
-        Destroy(launchable.GetComponent<Launchable>().launchableHinge);
-        launchable.GetComponent<Launchable>().isFiring = true;
+        Destroy(launchable.GetComponent<Launchable>().getLaunchableHinge());
+        launchable.GetComponent<Launchable>().setIsFiring(true);
         launchable.GetComponent<CircleCollider2D>().enabled = true;
         launchable.GetComponent<Launchable>().launch(target);
         launchable = null;
+    }
+
+    public GameObject getLaunchable()
+    {
+        return launchable;
+    }
+
+    public void setLaunchable(GameObject newLaunchable)
+    {
+        launchable = newLaunchable;
     }
 }

@@ -18,7 +18,7 @@ public class Barrier : MonoBehaviour {
             foreach (GameObject slot in RuneStoneSlots)
             {
 
-                if (slot.GetComponent<RuneStoneSlot>().activate == true)
+                if (slot.GetComponent<RuneStoneSlot>().GetActivate() == true)
                 {
                     complete++;
                 }
@@ -35,7 +35,7 @@ public class Barrier : MonoBehaviour {
     {
         if(collision.gameObject.tag == "Launchable" && isBreakable == true)
         {
-            if(collision.gameObject.GetComponent<Launchable>().isFiring == true)
+            if(collision.gameObject.GetComponent<Launchable>().getIsFiring() == true)
             {
                 gameObject.SetActive(false);
             }

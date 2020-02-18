@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-    public Rigidbody2D rb;//used to move the player
+    private Rigidbody2D rb;//used to move the player
     public float speed = 1.0f; //the speed of the player
     public float jumpHeight = 5f; // determines how high the player can jump
-    public bool isMovingStone = false; // used to check to see if the player is moving a rune stone
-    public int checkPoint = 0; // used to check which checkpoint the player is at
+    private bool isMovingStone = false; // used to check to see if the player is moving a rune stone
+    private int checkPoint = 0; // used to check which checkpoint the player is at
     private bool isOnLadder = false;
     private bool isOnGround = false; // used to check if the player is on the ground
-    public GameObject interactable = null;//used to check which game object is currently selected for interaction
+    private GameObject interactable = null;//used to check which game object is currently selected for interaction
     
     // Use this for initialization
     void Start ()
@@ -69,11 +69,11 @@ public class PlayerController : MonoBehaviour {
             
             if (Input.GetKey(KeyCode.W))
             {
-                transform.position += new Vector3(0, 1, 0) * Time.deltaTime;
+                transform.position += new Vector3(0, 2.5f, 0) * Time.deltaTime;
             }
             if (Input.GetKey(KeyCode.S))
             {
-                transform.position += new Vector3(0, -1, 0) * Time.deltaTime;
+                transform.position += new Vector3(0, -2.5f, 0) * Time.deltaTime;
             }
         }
         
@@ -106,8 +106,8 @@ public class PlayerController : MonoBehaviour {
                 //if the player is moving a stone, destroys the components
                 else
                 {
-                    Destroy(interactable.GetComponent<DraggedObject>().distanceJoint);
-                    Destroy(interactable.GetComponent<DraggedObject>().rb);
+                    Destroy(interactable.GetComponent<DraggedObject>().GetDJ());
+                    Destroy(interactable.GetComponent<DraggedObject>().GetRB());
                     isMovingStone = false;
                 }
             }
@@ -122,8 +122,8 @@ public class PlayerController : MonoBehaviour {
                 //if the player is moving a stone, destroys the components
                 else
                 {
-                    Destroy(interactable.GetComponent<DraggedObject>().distanceJoint);
-                    Destroy(interactable.GetComponent<DraggedObject>().rb);
+                    Destroy(interactable.GetComponent<DraggedObject>().GetDJ());
+                    Destroy(interactable.GetComponent<DraggedObject>().GetRB());
                     isMovingStone = false;
                 }
             }
@@ -239,8 +239,8 @@ public class PlayerController : MonoBehaviour {
             isOnGround = false;
             if(isMovingStone == true)
             {
-                Destroy(interactable.GetComponent<RuneStone>().distanceJoint);
-                Destroy(interactable.GetComponent<RuneStone>().rb);
+                Destroy(interactable.GetComponent<RuneStone>().GetDJ());
+                Destroy(interactable.GetComponent<RuneStone>().GetRB());
                 isMovingStone = false;
             }
         }
@@ -253,4 +253,45 @@ public class PlayerController : MonoBehaviour {
         rb.mass = 0.5f;
         rb.gravityScale = 1.5f;
     }
+
+    public bool getIsMovingStone()
+    {
+        return isMovingStone;
+    }
+
+    public void setIsMovingStone(bool newIsMovingStone)
+    {
+        isMovingStone = newIsMovingStone;
+    }
+
+    public GameObject getInteractable()
+    {
+        return interactable;
+    }
+
+    public void setInteractable(GameObject newInteractable)
+    {
+        interactable = newInteractable;
+    }
+
+    public void SetRB(Rigidbody2D newRB)
+    {
+        rb = newRB;
+    }
+
+    public Rigidbody2D GetRB()
+    {
+        return rb;
+    }
+
+    public int GetCheckPoint()
+    {
+        return checkPoint;
+    }
+
+    public void SetCheckPoint(int newCheckPoint)
+    {
+        checkPoint = newCheckPoint;
+    }
+
 }

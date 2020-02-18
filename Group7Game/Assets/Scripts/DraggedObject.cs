@@ -6,9 +6,10 @@ public class DraggedObject : MonoBehaviour {
     protected bool playerCollision = false; //used to prevent the rigidbody from being destroyed if the player is dragging it
     protected bool isTouchingStone = false; //used to prevent bugs where collisions break the joint
     protected bool isTouchingOtherObject = false; //used to prevent bugs where collisions break the joint
-    public Rigidbody2D rb;//Rigidbody is dynamically created and destroyed under certain conditions
-    public DistanceJoint2D distanceJoint; //Distance joint to be added to the player when dragging
-    public bool limitControl = true;
+    protected bool limitControl = true; //used to check if a speed limit should be applied to the object
+    protected Rigidbody2D rb;//Rigidbody is dynamically created and destroyed under certain conditions
+    protected DistanceJoint2D distanceJoint; //Distance joint to be added to the player when dragging
+    
 
 
     // Use this for initialization
@@ -29,13 +30,13 @@ public class DraggedObject : MonoBehaviour {
         {
             if (rb != null)
             {
-                if (rb.velocity.x > 1)
+                if (rb.velocity.x > 3)
                 {
-                    rb.velocity = new Vector3(1f, rb.velocity.y, 0);
+                    rb.velocity = new Vector3(3f, rb.velocity.y, 0);
                 }
-                else if (rb.velocity.x < -1)
+                else if (rb.velocity.x < -3)
                 {
-                    rb.velocity = new Vector3(-1f, rb.velocity.y, 0);
+                    rb.velocity = new Vector3(-3f, rb.velocity.y, 0);
                 }
             }
         }
@@ -46,7 +47,7 @@ public class DraggedObject : MonoBehaviour {
         //destroys the rigidbody when colliding with the ground, but only if the player isnt touching the collider
         if (collision.gameObject.tag == "Ground")
         {
-            if (playerCollision == false && GameObject.Find("Character").GetComponent<PlayerController>().isMovingStone == false)
+            if (playerCollision == false && GameObject.Find("Character").GetComponent<PlayerController>().getIsMovingStone() == false)
             {
                 Destroy(rb);
             }
@@ -71,7 +72,7 @@ public class DraggedObject : MonoBehaviour {
         if (collision.gameObject.tag == "Ground" && isTouchingOtherObject == false)
         {
             Destroy(distanceJoint);
-            GameObject.Find("Character").GetComponent<PlayerController>().isMovingStone = false;
+            GameObject.Find("Character").GetComponent<PlayerController>().setIsMovingStone(false);
         }
         //makes it possible for the rune stone to break the joint after falling off edge, should the player touch the rune stone with another rune stone
         if (collision.gameObject.tag == "RuneStone")
@@ -87,6 +88,26 @@ public class DraggedObject : MonoBehaviour {
         rb.mass = 0.3f;
         rb.gravityScale = 1.5f;
         distanceJoint = gameObject.AddComponent<DistanceJoint2D>();
-        distanceJoint.connectedBody = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().rb;
+        distanceJoint.connectedBody = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().GetRB();
+    }
+
+    public void SetRB(Rigidbody2D newRB)
+    {
+        rb = newRB;
+    }
+
+    public Rigidbody2D GetRB()
+    {
+        return rb;
+    }
+
+    public void SetDJ(DistanceJoint2D newDistanceJoint)
+    {
+        distanceJoint = newDistanceJoint;
+    }
+
+    public DistanceJoint2D GetDJ()
+    {
+        return distanceJoint;
     }
 }

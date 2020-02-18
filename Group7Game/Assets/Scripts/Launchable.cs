@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Launchable : DraggedObject {
-    public HingeJoint2D launchableHinge;
-    public bool isFiring = false;
+    private HingeJoint2D launchableHinge;
+    private bool isFiring = false;
     // Use this for initialization
     void Start () {
         rb = gameObject.AddComponent<Rigidbody2D>();
@@ -16,13 +16,13 @@ public class Launchable : DraggedObject {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "CatapultArm" && collision.GetComponent<CatapultArm>().launchable == null && isFiring == false)
+        if (collision.tag == "CatapultArm" && collision.GetComponent<CatapultArm>().getLaunchable() == null && isFiring == false)
         {
-            if (GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().isMovingStone == true)
+            if (GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().getIsMovingStone() == true)
             {
                 Destroy(distanceJoint);
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().isMovingStone = false;
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().interactable = null;
+                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().setIsMovingStone(false);
+                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().setInteractable(null);
             }
             transform.position = collision.transform.position - new Vector3(1, -0.5f, 0);
             AttachLaunchable(collision);
@@ -40,7 +40,7 @@ public class Launchable : DraggedObject {
         //destroys the rigidbody when colliding with the ground, but only if the player isnt touching the collider
         if (collision.gameObject.tag == "Ground")
         {
-            if (playerCollision == false && GameObject.Find("Character").GetComponent<PlayerController>().isMovingStone == false)
+            if (playerCollision == false && GameObject.Find("Character").GetComponent<PlayerController>().getIsMovingStone() == false)
             {
                 Destroy(rb);
             }
@@ -65,5 +65,25 @@ public class Launchable : DraggedObject {
         Vector3 launchVector;
         launchVector = target - transform.position;
         rb.velocity = launchVector;
+    }
+
+    public bool getIsFiring()
+    {
+        return isFiring;
+    }
+
+    public void setIsFiring(bool newIsFiring)
+    {
+        isFiring = newIsFiring;
+    }
+
+    public HingeJoint2D getLaunchableHinge()
+    {
+        return launchableHinge;
+    }
+
+    public void setLaunchableHinge(HingeJoint2D newLaunchableHinge)
+    {
+        launchableHinge = newLaunchableHinge;
     }
 }

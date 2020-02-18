@@ -28,11 +28,11 @@ public class RuneStone : DraggedObject {
         {
             Destroy(distanceJoint);
             Destroy(rb);
-            GameObject.Find("Character").GetComponent<PlayerController>().isMovingStone = false;
+            GameObject.Find("Character").GetComponent<PlayerController>().setIsMovingStone(false);
             if (collision.gameObject.GetComponent<RuneStoneSlot>().identifier == identifier)
             {
                 transform.position = collision.gameObject.transform.position + new Vector3(0,0.4f,0);
-                collision.gameObject.GetComponent<RuneStoneSlot>().activate = true;
+                collision.gameObject.GetComponent<RuneStoneSlot>().SetActivate(false);
             }
             else
             {

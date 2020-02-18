@@ -19,11 +19,11 @@ public class Catapult : MonoBehaviour {
         if (hasLaunched == true)
         {
             //releases the launchable object
-            if(attachedArm.transform.rotation.eulerAngles.z >= 270 && attachedArm.GetComponent<CatapultArm>().launchable != null)
+            if(attachedArm.transform.rotation.eulerAngles.z >= 270 && attachedArm.GetComponent<CatapultArm>().getLaunchable() != null)
             {
                 angleCheck = true;
             }
-            if (attachedArm.transform.rotation.eulerAngles.z <= 270 && attachedArm.GetComponent<CatapultArm>().launchable != null && angleCheck == true)
+            if (attachedArm.transform.rotation.eulerAngles.z <= 270 && attachedArm.GetComponent<CatapultArm>().getLaunchable() != null && angleCheck == true)
             {
                 attachedArm.GetComponent<CatapultArm>().ReleaseLaunchable(target.transform.position);
                 angleCheck = false;

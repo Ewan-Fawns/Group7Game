@@ -20,9 +20,9 @@ public class CheckPoint : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if(checkPointNum == GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().checkPoint)
+            if(checkPointNum == GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().GetCheckPoint())
             {
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().rb.velocity = new Vector3(0, 0, 0);
+                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().GetRB().velocity = new Vector3(0, 0, 0);
                 GameObject.FindGameObjectWithTag("Player").transform.position = transform.position;
 
                 foreach (GameObject runeStone in GameObject.FindGameObjectsWithTag("RuneStone"))
@@ -37,7 +37,7 @@ public class CheckPoint : MonoBehaviour {
                 {
                     if(runeStoneSlot.GetComponent<RuneStoneSlot>().checkPoint == checkPointNum)
                     {
-                        runeStoneSlot.GetComponent<RuneStoneSlot>().activate = false;
+                        runeStoneSlot.GetComponent<RuneStoneSlot>().SetActivate(false);
                     }
                 }
 
