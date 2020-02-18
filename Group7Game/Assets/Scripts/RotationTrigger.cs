@@ -12,7 +12,11 @@ public class RotationTrigger : MonoBehaviour
     }
 
     // Update is called once per frame
+<<<<<<< Updated upstream
     void OnCollisionEnter2D(Collision2D other)
+=======
+    void OnTriggerEnter2D(Collider2D other)
+>>>>>>> Stashed changes
     {
         if (other.gameObject.tag == "Player")
         {
@@ -22,7 +26,11 @@ public class RotationTrigger : MonoBehaviour
         }
     }
 
+<<<<<<< Updated upstream
     void OnCollisionExit2D(Collision2D other)
+=======
+    void OnTriggerExit2D(Collider2D other)
+>>>>>>> Stashed changes
     {
         if (other.gameObject.tag == "Player")
         {
