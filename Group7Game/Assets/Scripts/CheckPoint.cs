@@ -29,7 +29,10 @@ public class CheckPoint : MonoBehaviour {
                 {
                     if(runeStone.GetComponent<RuneStone>().checkPoint == checkPointNum)
                     {
+                        
                         runeStone.transform.position = runeStone.GetComponent<RuneStone>().getOrigonalPosition();
+                        runeStone.GetComponent<DraggedObject>().DestroyRB();
+                        runeStone.GetComponent<DraggedObject>().CreateRB();
                     }
                 }
 
@@ -38,6 +41,23 @@ public class CheckPoint : MonoBehaviour {
                     if(runeStoneSlot.GetComponent<RuneStoneSlot>().checkPoint == checkPointNum)
                     {
                         runeStoneSlot.GetComponent<RuneStoneSlot>().SetActivate(false);
+                    }
+                }
+
+                foreach (GameObject rotatingPlatform in GameObject.FindGameObjectsWithTag("RotatingPlatform"))
+                {
+                    if (rotatingPlatform.GetComponent<RotatingPlatform>().checkPoint == checkPointNum)
+                    {
+
+                        rotatingPlatform.transform.Rotate(-rotatingPlatform.transform.rotation.eulerAngles);
+                        //if(rotatingPlatform.transform.rotation.eulerAngles.z > 0)
+                        //{
+                        //    rotatingPlatform.transform.Rotate();
+                        //}else
+                        //{
+                        //    rotatingPlatform.transform.Rotate()
+                        //}
+
                     }
                 }
 

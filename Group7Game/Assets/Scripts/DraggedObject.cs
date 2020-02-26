@@ -101,6 +101,16 @@ public class DraggedObject : MonoBehaviour {
         return rb;
     }
 
+    public void CreateRB()
+    {
+        rb = gameObject.AddComponent<Rigidbody2D>();
+    }
+
+    public void DestroyRB()
+    {
+        Destroy(rb);
+    }
+
     public void SetDJ(DistanceJoint2D newDistanceJoint)
     {
         distanceJoint = newDistanceJoint;

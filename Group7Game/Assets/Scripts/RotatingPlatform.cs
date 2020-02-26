@@ -7,7 +7,7 @@ using UnityEngine;
 public class RotatingPlatform : MonoBehaviour
 {
 
-
+    public int checkPoint;
     public int speed = 100;
 
     // Use this for initialization
