@@ -29,10 +29,15 @@ public class CheckPoint : MonoBehaviour {
                 {
                     if(runeStone.GetComponent<RuneStone>().checkPoint == checkPointNum)
                     {
-                        
+                       if(runeStone.GetComponent<DraggedObject>().GetRB() != null)
+                       {
+                            runeStone.GetComponent<DraggedObject>().DestroyRB();
+                       }
+
+                        runeStone.GetComponent<DraggedObject>().afterFrame = true;
+                        //runeStone.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
                         runeStone.transform.position = runeStone.GetComponent<RuneStone>().getOrigonalPosition();
-                        runeStone.GetComponent<DraggedObject>().DestroyRB();
-                        runeStone.GetComponent<DraggedObject>().CreateRB();
+                        
                     }
                 }
 

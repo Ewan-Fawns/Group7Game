@@ -7,9 +7,9 @@ public class DraggedObject : MonoBehaviour {
     protected bool isTouchingStone = false; //used to prevent bugs where collisions break the joint
     protected bool isTouchingOtherObject = false; //used to prevent bugs where collisions break the joint
     protected bool limitControl = true; //used to check if a speed limit should be applied to the object
-    protected Rigidbody2D rb;//Rigidbody is dynamically created and destroyed under certain conditions
+    public Rigidbody2D rb;//Rigidbody is dynamically created and destroyed under certain conditions
     protected DistanceJoint2D distanceJoint; //Distance joint to be added to the player when dragging
-    
+    public bool afterFrame = false;
 
 
     // Use this for initialization
@@ -20,7 +20,11 @@ public class DraggedObject : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-		
+		if(afterFrame == true)
+        {
+            CreateRB();
+            afterFrame = false;
+        }
 	}
 
     private void FixedUpdate()
@@ -104,6 +108,7 @@ public class DraggedObject : MonoBehaviour {
     public void CreateRB()
     {
         rb = gameObject.AddComponent<Rigidbody2D>();
+        rb.freezeRotation = true;
     }
 
     public void DestroyRB()

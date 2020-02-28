@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RuneStone : DraggedObject {
-    private Vector3 origonalLocation; //Used to store the origonal location of the rune stone for teleportation
+    Vector3 origonalLocation; //Used to store the origonal location of the rune stone for teleportation
     public int identifier = 0; //identifier used to check if the rune stone is associated with the rune stone slot
     public int checkPoint = 0; //used to identify which checkpoint is associated with this runestone
 
@@ -13,10 +13,6 @@ public class RuneStone : DraggedObject {
         rb = gameObject.AddComponent<Rigidbody2D>();
     }
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
 
     private void OnTriggerEnter2D(Collider2D collision)
