@@ -15,6 +15,7 @@ TagManager:
   - CatapultArm
   - Launchable
   - RotatingPlatform
+  - DragonsBreath
   layers:
   - Default
   - TransparentFX

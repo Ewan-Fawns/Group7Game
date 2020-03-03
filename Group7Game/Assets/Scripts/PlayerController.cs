@@ -167,6 +167,11 @@ public class PlayerController : MonoBehaviour {
         {
             interactable = collision.gameObject;
         }
+
+        if (collision.gameObject.tag == "DragonsBreath")
+        {
+            GameObject.Find("CheckPointManager").GetComponent<CheckPointManager>().resetPuzzle();
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -214,6 +219,9 @@ public class PlayerController : MonoBehaviour {
             interactable = collision.gameObject;
         }
     }
+
+
+
 
     private void OnCollisionExit2D(Collision2D collision)
     {
