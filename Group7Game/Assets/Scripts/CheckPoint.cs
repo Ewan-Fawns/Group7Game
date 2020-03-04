@@ -12,40 +12,7 @@ public class CheckPoint : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-        resetPuzzle();
-	}
+	
 
-    private void resetPuzzle()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            if(checkPointNum == GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().GetCheckPoint())
-            {
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().GetRB().velocity = new Vector3(0, 0, 0);
-                GameObject.FindGameObjectWithTag("Player").transform.position = transform.position;
-
-                foreach (GameObject runeStone in GameObject.FindGameObjectsWithTag("RuneStone"))
-                {
-                    if(runeStone.GetComponent<RuneStone>().checkPoint == checkPointNum)
-                    {
-                        runeStone.transform.position = runeStone.GetComponent<RuneStone>().getOrigonalPosition();
-                    }
-                }
-
-                foreach (GameObject runeStoneSlot in GameObject.FindGameObjectsWithTag("RuneStoneSlot"))
-                {
-                    if(runeStoneSlot.GetComponent<RuneStoneSlot>().checkPoint == checkPointNum)
-                    {
-                        runeStoneSlot.GetComponent<RuneStoneSlot>().SetActivate(false);
-                    }
-                }
-
-                foreach (GameObject destroyable in destroyables)
-                {
-                    destroyable.SetActive(true);
-                }
-            }
-        }
-    }
+    
 }

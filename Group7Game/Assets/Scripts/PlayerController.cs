@@ -167,6 +167,11 @@ public class PlayerController : MonoBehaviour {
         {
             interactable = collision.gameObject;
         }
+
+        if (collision.gameObject.tag == "DragonsBreath")
+        {
+            GameObject.Find("CheckPointManager").GetComponent<CheckPointManager>().resetPuzzle();
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -202,7 +207,7 @@ public class PlayerController : MonoBehaviour {
             isOnGround = true;
         }
         //enables the player to jump and makes the runestone the active interactable object
-        if (collision.gameObject.tag == "RuneStone" && isOnLadder == false) 
+        if (collision.gameObject.tag == "RuneStone" && isOnLadder == false)
         {
             isOnGround = true;
             interactable = collision.gameObject;
@@ -214,6 +219,9 @@ public class PlayerController : MonoBehaviour {
             interactable = collision.gameObject;
         }
     }
+
+
+
 
     private void OnCollisionExit2D(Collision2D collision)
     {
