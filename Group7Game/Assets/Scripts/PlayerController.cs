@@ -202,13 +202,13 @@ public class PlayerController : MonoBehaviour {
             isOnGround = true;
         }
         //enables the player to jump and makes the runestone the active interactable object
-        if (collision.gameObject.tag == "RuneStone")
+        if (collision.gameObject.tag == "RuneStone" && isOnLadder == false) 
         {
             isOnGround = true;
             interactable = collision.gameObject;
         }
         //enables the player to jump and makes the launchable the active interactable object
-        if (collision.gameObject.tag == "Launchable")
+        if (collision.gameObject.tag == "Launchable" && isOnLadder == false)
         {
             isOnGround = true;
             interactable = collision.gameObject;
