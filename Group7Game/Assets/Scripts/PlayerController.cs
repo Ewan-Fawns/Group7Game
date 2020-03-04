@@ -12,10 +12,14 @@ public class PlayerController : MonoBehaviour {
     private bool isOnLadder = false;
     private bool isOnGround = false; // used to check if the player is on the ground
     private GameObject interactable = null;//used to check which game object is currently selected for interaction
+    private bool jump = true;
+    public Animator animator;
+    private bool walk = false;
     
     // Use this for initialization
     void Start ()
     {
+        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
 	
@@ -23,7 +27,16 @@ public class PlayerController : MonoBehaviour {
 	void Update ()
     {
         Interact();
+        if (rb.velocity.x != 0)
+        {
+            animator.SetBool("isWalking", true);
+
+        }
+        else animator.SetBool("isWalking", false);
+     
+
     }
+
 
     private void FixedUpdate()
     {
@@ -39,11 +52,17 @@ public class PlayerController : MonoBehaviour {
             if (Input.GetKey(KeyCode.A))
             {
                 rb.AddForce(Vector3.left * speed);
+                transform.localScale = new Vector3(-0.3f, 0.3f, 1);
+                
+
+
             }
             //move right
             if (Input.GetKey(KeyCode.D))
             {
                 rb.AddForce(Vector3.right * speed);
+                transform.localScale = new Vector3(0.3f, 0.3f, 1);
+
             }
             //jump
             if (Input.GetKey(KeyCode.W))
@@ -52,6 +71,10 @@ public class PlayerController : MonoBehaviour {
                 {
                     rb.velocity = new Vector3(rb.velocity.x, jumpHeight, 0);
                     isOnGround = false;
+                    
+                    
+
+
                 }
             }
             //Used to limit speed

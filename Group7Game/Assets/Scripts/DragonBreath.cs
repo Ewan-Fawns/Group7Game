@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class DragonBreath : MonoBehaviour {
     public float speed;
     public float timeInterval;
     private float timePassed = 0;
+    public float stopShake;
 	// Use this for initialization
 	void Start () {
 		
@@ -17,6 +19,14 @@ public class DragonBreath : MonoBehaviour {
         {
             transform.position = new Vector3(GameObject.Find("Character").transform.position.x + 30, GameObject.Find("Character").transform.position.y + 18, 0);
             timePassed = 0;
+            CinemachineVirtualCamera vcam = GameObject.Find("CM vcam1").GetComponent<CinemachineVirtualCamera>();
+            vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0.5f;
+            
+        }
+        if (timePassed >= stopShake)
+        {
+            CinemachineVirtualCamera vcam = GameObject.Find("CM vcam1").GetComponent<CinemachineVirtualCamera>();
+            vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0;
         }
         timePassed += Time.deltaTime;
 	}
@@ -30,4 +40,5 @@ public class DragonBreath : MonoBehaviour {
     {
         timePassed = 0;
     }
+
 }
