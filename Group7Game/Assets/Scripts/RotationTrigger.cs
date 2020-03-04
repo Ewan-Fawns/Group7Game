@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RotationTrigger : MonoBehaviour
 {
-
+    public List<GameObject> rotatingPlatforms;
     // Use this for initialization
     void Start()
     {
@@ -16,9 +16,13 @@ public class RotationTrigger : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            RotatingPlatform myScript = other.gameObject.GetComponent<RotatingPlatform>();
+            foreach(GameObject platform in rotatingPlatforms)
+            {
+                RotatingPlatform myScript = platform.gameObject.GetComponent<RotatingPlatform>();
 
-            myScript.enabled = true;
+                myScript.enabled = true;
+            }
+            
         }
     }
 
@@ -26,8 +30,12 @@ public class RotationTrigger : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            RotatingPlatform myScript = other.gameObject.GetComponent<RotatingPlatform>();
-            myScript.enabled = false;
+            foreach (GameObject platform in rotatingPlatforms)
+            {
+                RotatingPlatform myScript = platform.gameObject.GetComponent<RotatingPlatform>();
+                myScript.enabled = false;
+            }
+            
         }
     }
 }

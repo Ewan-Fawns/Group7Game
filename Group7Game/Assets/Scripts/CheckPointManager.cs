@@ -32,7 +32,7 @@ public class CheckPointManager : MonoBehaviour {
             {
                 GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().GetRB().velocity = new Vector3(0, 0, 0);
                 GameObject.FindGameObjectWithTag("Player").transform.position = checkPoint.transform.position;
-
+                GameObject.FindGameObjectWithTag("DragonsBreath").GetComponent<DragonBreath>().resetTime();
                 foreach (GameObject runeStone in GameObject.FindGameObjectsWithTag("RuneStone"))
                 {
                     if (runeStone.GetComponent<RuneStone>().checkPoint == checkPoint.GetComponent<CheckPoint>().checkPointNum)
@@ -69,6 +69,8 @@ public class CheckPointManager : MonoBehaviour {
                 {
                     destroyable.SetActive(true);
                 }
+                
+
             }
         }
     }

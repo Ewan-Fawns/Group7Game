@@ -25,4 +25,9 @@ public class DragonBreath : MonoBehaviour {
     {
         transform.position += new Vector3(-speed, 0, 0) * Time.deltaTime;
     }
+
+    public void resetTime()
+    {
+        timePassed = 0;
+    }
 }
