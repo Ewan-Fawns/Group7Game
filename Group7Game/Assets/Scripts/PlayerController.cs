@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{
 
     private Rigidbody2D rb;//used to move the player
     public float speed = 1.0f; //the speed of the player
@@ -15,16 +16,16 @@ public class PlayerController : MonoBehaviour {
     private bool jump = true;
     public Animator animator;
     private bool walk = false;
-    
+
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update()
     {
         Interact();
         if (rb.velocity.x != 0)
@@ -33,36 +34,39 @@ public class PlayerController : MonoBehaviour {
 
         }
         else animator.SetBool("isWalking", false);
-     
 
+        MovePlayer();
     }
 
 
     private void FixedUpdate()
     {
-        MovePlayer();
+
     }
 
     //used to move the player
     void MovePlayer()
     {
-        if(isOnLadder == false)
+        bool isHoldingA = false;
+        bool isHoldingD = false;
+
+        if (isOnLadder == false)
         {
             //move left
             if (Input.GetKey(KeyCode.A))
             {
                 rb.AddForce(Vector3.left * speed);
+                //rb.velocity = new Vector3(-1 * speed, rb.velocity.y, 0) ;
                 transform.localScale = new Vector3(-0.3f, 0.3f, 1);
-                
-
-
+                isHoldingA = true;
             }
             //move right
             if (Input.GetKey(KeyCode.D))
             {
                 rb.AddForce(Vector3.right * speed);
+                //rb.velocity = new Vector3(1 * speed, rb.velocity.y, 0) ;
                 transform.localScale = new Vector3(0.3f, 0.3f, 1);
-
+                isHoldingD = true;
             }
             //jump
             if (Input.GetKey(KeyCode.W))
@@ -71,25 +75,21 @@ public class PlayerController : MonoBehaviour {
                 {
                     rb.velocity = new Vector3(rb.velocity.x, jumpHeight, 0);
                     isOnGround = false;
-                    
-                    
-
-
                 }
             }
             //Used to limit speed
-        if (rb.velocity.x > 10.0f)
-        {
-            rb.velocity = new Vector3(10.0f, rb.velocity.y, 0);
-        }
-        else if (rb.velocity.x < -10.0f)
-        {
-            rb.velocity = new Vector3(-10.0f, rb.velocity.y, 0);
-        }
+            if (rb.velocity.x > 5f)
+            {
+                rb.velocity = new Vector3(5f, rb.velocity.y, 0);
+            }
+            else if (rb.velocity.x < -5f)
+            {
+                rb.velocity = new Vector3(-5f, rb.velocity.y, 0);
+            }
         }
         else
         {
-            
+
             if (Input.GetKey(KeyCode.W))
             {
                 transform.position += new Vector3(0, 2.5f, 0) * Time.deltaTime;
@@ -99,10 +99,16 @@ public class PlayerController : MonoBehaviour {
                 transform.position += new Vector3(0, -2.5f, 0) * Time.deltaTime;
             }
         }
-        
 
-        
-       
+        if (Input.GetKeyUp(KeyCode.A) && isHoldingD == false && isOnGround == true)
+        {
+            rb.velocity = new Vector3(0, rb.velocity.y, 0);
+        }
+        if (Input.GetKeyUp(KeyCode.D) && isHoldingA == false && isOnGround == true)
+        {
+            rb.velocity = new Vector3(0, rb.velocity.y, 0);
+        }
+
     }
 
     void Interact()
@@ -120,8 +126,8 @@ public class PlayerController : MonoBehaviour {
             else if (interactable.tag == "RuneStone")
             {
                 //if the player isnt moving a stone, adds the components
-                
-                if(isMovingStone == false)
+
+                if (isMovingStone == false)
                 {
                     interactable.GetComponent<DraggedObject>().createDraggingComponents();
                     isMovingStone = true;
@@ -151,9 +157,9 @@ public class PlayerController : MonoBehaviour {
                 }
             }
             //Interaction to climb the ladder
-            else if(interactable.tag == "Ladder")
+            else if (interactable.tag == "Ladder")
             {
-                if(isOnLadder == false)
+                if (isOnLadder == false)
                 {
                     isOnLadder = true;
                     rb.velocity = new Vector3(0, 0, 0);
@@ -167,7 +173,7 @@ public class PlayerController : MonoBehaviour {
                 }
             }
             //Interaction to fire the catapult
-            else if(interactable.tag == "Catapult")
+            else if (interactable.tag == "Catapult")
             {
                 interactable.GetComponent<Catapult>().LaunchCatapult();
             }
@@ -176,7 +182,7 @@ public class PlayerController : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "CheckPoint")
+        if (collision.gameObject.tag == "CheckPoint")
         {
             checkPoint = collision.GetComponent<CheckPoint>().checkPointNum;
         }
@@ -203,13 +209,13 @@ public class PlayerController : MonoBehaviour {
         if (collision.gameObject.tag == "Ladder" && isMovingStone == false)
         {
             interactable = null;
-            if(isOnLadder == true && transform.position.y > collision.transform.position.y)
+            if (isOnLadder == true && transform.position.y > collision.transform.position.y)
             {
                 rb.gravityScale = 1.5f;
                 rb.velocity = new Vector3(rb.velocity.x, 5f, 0);
                 isOnLadder = false;
             }
-            else if(isOnLadder == true && transform.position.y < collision.transform.position.y)
+            else if (isOnLadder == true && transform.position.y < collision.transform.position.y)
             {
                 rb.gravityScale = 1.5f;
                 isOnLadder = false;
@@ -225,7 +231,7 @@ public class PlayerController : MonoBehaviour {
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //enables the player to jump again when touching the ground
-        if(collision.gameObject.tag == "Ground")
+        if (collision.gameObject.tag == "Ground")
         {
             isOnGround = true;
         }
@@ -251,7 +257,7 @@ public class PlayerController : MonoBehaviour {
         //interactable is removed thereby stopping functionality when not touching
         if (collision.gameObject.tag == "RuneStone")
         {
-            if(interactable.tag == "RuneStone" && isMovingStone == false)
+            if (interactable.tag == "RuneStone" && isMovingStone == false)
             {
                 interactable = null;
             }
@@ -259,7 +265,7 @@ public class PlayerController : MonoBehaviour {
 
         if (collision.gameObject.tag == "Launchable")
         {
-            if(interactable.tag == "Launchable" && isMovingStone == false)
+            if (interactable.tag == "Launchable" && isMovingStone == false)
             {
                 interactable = null;
             }
@@ -268,7 +274,7 @@ public class PlayerController : MonoBehaviour {
         if (collision.gameObject.tag == "Ground")
         {
             isOnGround = false;
-            if(isMovingStone == true)
+            if (isMovingStone == true)
             {
                 Destroy(interactable.GetComponent<RuneStone>().GetDJ());
                 Destroy(interactable.GetComponent<RuneStone>().GetRB());
